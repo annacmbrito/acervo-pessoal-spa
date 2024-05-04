@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-sign-in',
@@ -10,4 +10,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 })
 export class SignInComponent {
 
+  public form: FormGroup = this.formBuilder.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required]],
+  });
+
+  constructor(
+    private formBuilder: FormBuilder,
+  ) {}
+
+  public signIn(): void { }
 }
