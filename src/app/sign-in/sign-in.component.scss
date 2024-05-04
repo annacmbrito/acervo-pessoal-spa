@@ -1,0 +1,44 @@
+.root {
+    width: 100vw;
+    height: 100vh;
+}
+
+.card {
+    background-color: var(--blue-1);
+}
+
+@media screen and (min-width: 576px) {
+    .content {
+        width: 70%;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .content {
+        width: 60%;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .content {
+        width: 50%;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .content {
+        width: 40%;
+    }
+}
+
+@media screen and (min-width: 1400px) {
+    .content {
+        width: 30%;
+    }
+}
+
+@media screen and (min-width: 2000px) {
+    .content {
+        width: 20%;
+    }
+}

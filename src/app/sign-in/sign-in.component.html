@@ -1,1 +1,22 @@
-<p>sign-in works!</p>
+<div class="root d-flex align-items-center justify-content-center">
+  <div class="content p-4">
+    <h1 class="mb-3">Login</h1>
+    <div class="card">
+      <div class="card-body d-flex flex-column p-5">
+        <form [formGroup]="form">
+          <div class="mb-3">
+            <label for="email" class="text-light">Email:</label>
+            <input id="email" class="form-control" type="text" formControlName="email"/>
+          </div>
+          <div class="mb-4">
+            <label for="password" class="text-light">Senha:</label>
+            <input id="password" class="form-control" type="password" formControlName="password"/>
+          </div>
+          <div>
+            <button class="btn btn-light px-5" (click)="signIn()">Login</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
