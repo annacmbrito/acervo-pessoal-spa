@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
@@ -16,8 +18,16 @@ export class SignInComponent {
   });
 
   constructor(
+    private router: Router,
     private formBuilder: FormBuilder,
+    private authService: AuthService,
   ) {}
 
-  public signIn(): void { }
+  public signIn(): void {
+    if(this.form.valid) {
+      this.authService.signIn(this.form.value).subscribe({
+        next: () => this.router.navigate(["/livros"])
+      });
+    }
+  }
 }
