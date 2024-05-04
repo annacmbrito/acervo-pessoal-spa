@@ -19,4 +19,8 @@ export class AuthService {
     return this.http.post<{token:string}>(`${environment.apiBaseUrl}/api/v1/auth`, data)
       .pipe(map(({ token }) => localStorage.setItem(this.TOKEN_KEY, token)));
   }
+
+  public isAuthenticated(): boolean {
+    return !!localStorage.getItem(this.TOKEN_KEY);
+  }
 }
