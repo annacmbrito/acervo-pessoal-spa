@@ -1,9 +1,22 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, map } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor() { }
+  private readonly TOKEN_KEY: string = "AUTH_TOKEN";
+
+  constructor(private http: HttpClient) { }
+
+  public signIn(data: {
+    email: string, 
+    password: string
+  }): Observable<void> {
+    return this.http.post<{token:string}>(`${environment.apiBaseUrl}/api/v1/auth`, data)
+      .pipe(map(({ token }) => localStorage.setItem(this.TOKEN_KEY, token)));
+  }
 }
