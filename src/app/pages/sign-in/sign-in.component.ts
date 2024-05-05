@@ -31,9 +31,12 @@ export class SignInComponent {
 
   public signIn(): void {
     if(this.form.valid) {
+      this.form.disable();
       this.authService.signIn(this.form.value).subscribe({
         next: () => this.router.navigate(["/livros"]),
         error: () => this.toastrService.error('Credenciais inválidas!'),
+      }).add(() => {
+        this.form.enable();
       });
     }
   }

@@ -13,7 +13,7 @@
             <input id="password" class="form-control" type="password" formControlName="password"/>
           </div>
           <div>
-            <button class="btn btn-light px-5" (click)="signIn()">Login</button>
+            <button class="btn btn-light" [disabled]="form.disabled" (click)="signIn()">Login</button>
           </div>
         </form>
       </div>
