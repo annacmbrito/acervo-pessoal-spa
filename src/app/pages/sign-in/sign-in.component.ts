@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-sign-in',
@@ -21,12 +22,14 @@ export class SignInComponent {
     private router: Router,
     private formBuilder: FormBuilder,
     private authService: AuthService,
+    private toastrService: ToastrService,
   ) {}
 
   public signIn(): void {
     if(this.form.valid) {
       this.authService.signIn(this.form.value).subscribe({
-        next: () => this.router.navigate(["/livros"])
+        next: () => this.router.navigate(["/livros"]),
+        error: () => this.toastrService.error('Credenciais inválidas!'),
       });
     }
   }
