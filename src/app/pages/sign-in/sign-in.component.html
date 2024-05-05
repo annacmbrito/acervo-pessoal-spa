@@ -13,7 +13,13 @@
             <input id="password" class="form-control" type="password" formControlName="password"/>
           </div>
           <div>
-            <button class="btn btn-light" [disabled]="form.disabled" (click)="signIn()">Login</button>
+            <button class="btn btn-light d-flex align-items-center justify-content-center w-25" [disabled]="form.disabled" (click)="signIn()">
+              @if (form.disabled) {
+                <app-spinner></app-spinner>
+              } @else {
+                <span>Login</span>
+              }
+            </button>
           </div>
         </form>
       </div>
