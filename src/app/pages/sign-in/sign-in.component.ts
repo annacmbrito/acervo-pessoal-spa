@@ -37,6 +37,10 @@ export class SignInComponent {
         error: () => this.toastrService.error('Credenciais inválidas!'),
       }).add(() => {
         this.form.enable();
+        this.form.setValue({
+          email: '',
+          password: '',
+        });
       });
     }
   }
