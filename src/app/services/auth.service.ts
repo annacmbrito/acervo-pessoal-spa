@@ -23,4 +23,8 @@ export class AuthService {
   public isAuthenticated(): boolean {
     return !!localStorage.getItem(this.TOKEN_KEY);
   }
+
+  public signOut(): void {
+    localStorage.removeItem(this.TOKEN_KEY);
+  }
 }
