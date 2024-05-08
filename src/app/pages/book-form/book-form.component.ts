@@ -2,17 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { CommonModule } from '@angular/common';
+import { RatingComponent } from '../../components/rating/rating.component';
 
 @Component({
   selector: 'app-book-form',
   standalone: true,
-  imports: [CommonModule, NavbarComponent],
+  imports: [CommonModule, NavbarComponent, RatingComponent],
   templateUrl: './book-form.component.html',
   styleUrl: './book-form.component.scss'
 })
 export class BookFormComponent implements OnInit {
 
   public bookId?: number;
+  public bookRating: number = 0;
   public commenting: boolean = false;
 
   constructor(private route: ActivatedRoute) {}
