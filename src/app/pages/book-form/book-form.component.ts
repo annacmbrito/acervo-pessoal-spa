@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 export class BookFormComponent implements OnInit {
 
   public bookId?: number;
+  public commenting: boolean = false;
 
   constructor(private route: ActivatedRoute) {}
 
@@ -24,5 +25,13 @@ export class BookFormComponent implements OnInit {
 
   public isEditMode(): boolean {
     return !!this.bookId;
+  }
+
+  public showDescriptionInput(): void {
+    this.commenting = false;
+  }
+
+  public showComentInput(): void {
+    this.commenting = true;
   }
 }
