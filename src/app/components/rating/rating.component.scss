@@ -1,0 +1,16 @@
+.img-wrapper {
+    width: 2rem;
+}
+
+.img-wrapper img {
+    max-width: 100%;
+}
+
+button {
+    border: none;
+    background-color: transparent;
+}
+
+.selected {
+    filter: brightness(0%) invert(84%) sepia(21%) saturate(3765%) hue-rotate(351deg) brightness(99%) contrast(104%);
+}
