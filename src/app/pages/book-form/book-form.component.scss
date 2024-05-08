@@ -1,3 +1,19 @@
+.book-img {
+    width: 12rem;
+    height: 16rem;
+    border: 1px solid black;
+    border-radius: 1rem;
+    background-color: white;
+}
+
+.img-wrapper {
+    width: 5rem;
+}
+
+.img-wrapper img {
+    max-width: 100%;
+}
+
 .nav-link {
     cursor: pointer;
     color: black;
