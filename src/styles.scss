@@ -1,9 +1,19 @@
 @import 'ngx-toastr/toastr';
 
 :root {
+    --blue-0: #385f81;
     --blue-1: #467eaf;
     --blue-2: #6fa8dc;
     --blue-3: #94bbf0;
 
     --golden: #ff9700;
+}
+
+.btn-main {
+    color: white !important;
+    background-color: var(--blue-1) !important;
+}
+
+.btn-main:hover {
+    background-color: var(--blue-0) !important;
 }
