@@ -8,5 +8,6 @@ export const routes: Routes = [
     { path: 'login', component: SignInComponent },
     { path: 'livros', component: BookListComponent, canActivate: [authenticatedGuard] },
     { path: 'livros/novo', component: BookFormComponent, canActivate: [authenticatedGuard] },
+    { path: 'livros/:id', component: BookFormComponent, canActivate: [authenticatedGuard] },
     { path: '**', redirectTo: 'login' }
 ];
