@@ -20,6 +20,10 @@
             </div>
             <div class="d-flex mb-3">
                 <button class="btn btn-secondary me-3" routerLink="/livros">Voltar</button>
+                <button *ngIf="isEditMode()" class="btn btn-main">Editar</button>
+            </div>
+            <div *ngIf="isEditMode()" class="row">
+                <button class="btn btn-danger">Excluir</button>
             </div>
         </div>
         <div class="col-9">
