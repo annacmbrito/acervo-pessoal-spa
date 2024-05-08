@@ -1,0 +1,21 @@
+.nav-link {
+    cursor: pointer;
+    color: black;
+    background-color: white;
+    border-color: #dee2e6;
+}
+
+.nav-link.active {
+    cursor: pointer;
+    color: white;
+    background-color: var(--blue-3);
+    border-bottom: none;
+}
+
+textarea {
+    resize: none;
+    outline: none;
+    padding: 1rem;
+    border: 1px solid #dee2e6;
+    border-top: none;
+}

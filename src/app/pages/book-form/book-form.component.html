@@ -1,1 +1,50 @@
-<p>book-form works!</p>
+<app-navbar name="Gabriel Neves"></app-navbar>
+<div class="container">
+    <div class="row p-5">
+        <div class="col-9">
+            <form>
+                <input class="form-control mb-3 w-100" type="text"/>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <input class="form-control w-100" type="text"/>
+                    </div>
+                    <div class="col-6">
+                        <input class="form-control w-100" type="text"/>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <input class="form-control w-100" type="text"/>
+                    </div>
+                    <div class="col-6">
+                        <input class="form-control w-100" type="text"/>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <input class="form-control w-100" type="text"/>
+                    </div>
+                    <div class="col-6">
+                        <input class="form-control w-100" type="text"/>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                          <a class="nav-link" [class.active]="!commenting" (click)="showDescriptionInput()">Descrição</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" [class.active]="commenting" (click)="showComentInput()">Comentário</a>
+                        </li>
+                    </ul>
+                    <div >
+                        <textarea class="w-100" rows="12"></textarea>
+                    </div>
+                </div>
+                <div *ngIf="!isEditMode()" class="d-flex justify-content-end">
+                    <button class="btn btn-main">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
