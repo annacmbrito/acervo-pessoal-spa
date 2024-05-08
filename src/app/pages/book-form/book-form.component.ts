@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { CommonModule } from '@angular/common';
 import { RatingComponent } from '../../components/rating/rating.component';
@@ -7,7 +7,7 @@ import { RatingComponent } from '../../components/rating/rating.component';
 @Component({
   selector: 'app-book-form',
   standalone: true,
-  imports: [CommonModule, NavbarComponent, RatingComponent],
+  imports: [CommonModule, NavbarComponent, RatingComponent, RouterLink],
   templateUrl: './book-form.component.html',
   styleUrl: './book-form.component.scss'
 })
