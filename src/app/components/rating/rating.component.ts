@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-rating',
@@ -9,4 +9,9 @@ import { Component } from '@angular/core';
 })
 export class RatingComponent {
 
+  @Input()
+  public value: number = 0;
+
+  @Output()
+  public valueChange: EventEmitter<number> = new EventEmitter();
 }
