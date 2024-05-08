@@ -14,4 +14,9 @@ export class RatingComponent {
 
   @Output()
   public valueChange: EventEmitter<number> = new EventEmitter();
+
+  public setValue(value: number): void {
+    this.value = value;
+    this.valueChange.emit(this.value);
+  }
 }
