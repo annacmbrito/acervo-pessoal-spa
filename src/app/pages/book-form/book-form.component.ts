@@ -10,6 +10,8 @@ import { Author } from '../../models/author.model';
 import { AuthorService } from '../../services/author.service';
 import { Category } from '../../models/category.model';
 import { CategoryService } from '../../services/category.service';
+import { Subcategory } from '../../models/subcategory.model';
+import { SubcategoryService } from '../../services/subcategory.service';
 
 @Component({
   selector: 'app-book-form',
@@ -36,12 +38,17 @@ export class BookFormComponent implements OnInit {
     orderBy: 'name', 
     content: [] 
   };
+  public subcategoryPage: Page<Subcategory> = { 
+    orderBy: 'name', 
+    content: [] 
+  };
 
   constructor(
     private route: ActivatedRoute,
     private authorService: AuthorService,
     private languageService: LanguageService,
     private categoryService: CategoryService,
+    private subcategoryService: SubcategoryService,
   ) {}
 
   ngOnInit(): void {
@@ -58,6 +65,9 @@ export class BookFormComponent implements OnInit {
     });
     this.categoryService.getAll(this.categoryPage).subscribe({
       next: page => this.categoryPage = page,
+    });
+    this.subcategoryService.getAll(this.subcategoryPage).subscribe({
+      next: page => this.subcategoryPage = page,
     });
   }
 

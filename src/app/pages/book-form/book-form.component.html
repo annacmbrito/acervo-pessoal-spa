@@ -65,7 +65,12 @@
                         </datalist>
                     </div>
                     <div class="col-6">
-                        <input class="form-control w-100" type="text"/>
+                        <input class="form-control w-100" type="text" list="subcategories"/>
+                        <datalist id="subcategories">
+                            @for (subcategory of subcategoryPage.content; track $index) {
+                                <option>{{ subcategory.name }}</option>
+                            }
+                        </datalist>
                     </div>
                 </div>
                 <div class="mb-3">
