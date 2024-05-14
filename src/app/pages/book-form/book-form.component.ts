@@ -8,6 +8,8 @@ import { Page } from '../../models/page.model';
 import { Language } from '../../models/language.model';
 import { Author } from '../../models/author.model';
 import { AuthorService } from '../../services/author.service';
+import { Category } from '../../models/category.model';
+import { CategoryService } from '../../services/category.service';
 
 @Component({
   selector: 'app-book-form',
@@ -30,11 +32,16 @@ export class BookFormComponent implements OnInit {
     orderBy: 'name', 
     content: [] 
   };
+  public categoryPage: Page<Category> = { 
+    orderBy: 'name', 
+    content: [] 
+  };
 
   constructor(
     private route: ActivatedRoute,
     private authorService: AuthorService,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private categoryService: CategoryService,
   ) {}
 
   ngOnInit(): void {
@@ -48,6 +55,9 @@ export class BookFormComponent implements OnInit {
     });
     this.languageService.getAll(this.languagePage).subscribe({
       next: page => this.languagePage = page,
+    });
+    this.categoryService.getAll(this.categoryPage).subscribe({
+      next: page => this.categoryPage = page,
     });
   }
 
