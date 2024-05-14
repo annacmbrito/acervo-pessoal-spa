@@ -20,6 +20,10 @@ export class AuthService {
       .pipe(map(({ token }) => localStorage.setItem(this.TOKEN_KEY, token)));
   }
 
+  public getToken(): string | null {
+    return localStorage.getItem(this.TOKEN_KEY);
+  }
+
   public isAuthenticated(): boolean {
     return !!localStorage.getItem(this.TOKEN_KEY);
   }
