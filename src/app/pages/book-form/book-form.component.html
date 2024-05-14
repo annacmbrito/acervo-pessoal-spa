@@ -1,6 +1,6 @@
 <app-navbar name="Gabriel Neves"></app-navbar>
 <div class="container">
-    <div class="row p-5">
+    <form class="row p-5" [formGroup]="form">
         <div class="col-3 d-flex flex-column align-items-center justify-content-start">
             <div class="mb-3">
                 <button class="book-img d-flex flex-column align-items-center justify-content-center">
@@ -10,12 +10,13 @@
                 </button>
             </div>
             <div class="mb-3">
-                <app-rating [(value)]="bookRating" />
+                <app-rating [value]="form.get('rating')?.value" (valueChange)="form.get('rating')?.setValue($event)" />
             </div>
             <div class="mb-3">
-                <select class="form-select">
-                    <option value="1" selected>Disponível</option>
-                    <option value="2">Emprestado</option>
+                <select class="form-select" formControlName="status">
+                    @for(status of bookStatus; track $index) {
+                        <option [value]="status" [selected]="$index == 0">{{ status }}</option>
+                    }
                 </select>
             </div>
             <div class="d-flex mb-3">
@@ -27,74 +28,80 @@
             </div>
         </div>
         <div class="col-9">
-            <form>
-                <input class="form-control mb-3 w-100 text-center" type="text" placeholder="Nome do Livro"/>
-                <div class="row mb-3">
-                    <div class="col-6">
-                        <input class="form-control w-100" type="text" placeholder="Autor(a)" list="authors"/>
-                        <datalist id="authors">
-                            @for (author of authorPage.content; track $index) {
-                                <option>{{ author.name }}</option>
-                            }
-                        </datalist>
-                    </div>
-                    <div class="col-6">
-                        <input class="form-control w-100" type="text" placeholder="Idioma" list="languages"/>
-                        <datalist id="languages">
-                            @for (language of languagePage.content; track $index) {
-                                <option>{{ language.name }}</option>
-                            }
-                        </datalist>
-                    </div>
+            <input class="form-control mb-3 w-100 text-center" type="text" placeholder="Nome do Livro" formControlName="name"/>
+            <div class="row mb-3">
+                <div class="col-6">
+                    <input class="form-control w-100" type="text" placeholder="Autor(a)" list="authors" formControlName="author"/>
+                    <datalist id="authors">
+                        @for (author of authorPage.content; track $index) {
+                            <option>{{ author.name }}</option>
+                        }
+                    </datalist>
                 </div>
-                <div class="row mb-3">
-                    <div class="col-6">
-                        <input class="form-control w-100" type="text" placeholder="Editora" list="publishers"/>
-                        <datalist id="publishers">
-                            @for (publisher of publisherPage.content; track $index) {
-                                <option>{{ publisher.name }}</option>
-                            }
-                        </datalist>
-                    </div>
-                    <div class="col-6">
-                        <input class="form-control w-100" placeholder="Páginas" type="text"/>
-                    </div>
+                <div class="col-6">
+                    <input class="form-control w-100" type="text" placeholder="Idioma" list="languages" formControlName="language"/>
+                    <datalist id="languages">
+                        @for (language of languagePage.content; track $index) {
+                            <option>{{ language.name }}</option>
+                        }
+                    </datalist>
                 </div>
-                <div class="row mb-3">
-                    <div class="col-6">
-                        <input class="form-control w-100" type="text" placeholder="Categoria" list="categories"/>
-                        <datalist id="categories">
-                            @for (category of categoryPage.content; track $index) {
-                                <option>{{ category.name }}</option>
-                            }
-                        </datalist>
-                    </div>
-                    <div class="col-6">
-                        <input class="form-control w-100" type="text" placeholder="Subcategoria" list="subcategories"/>
-                        <datalist id="subcategories">
-                            @for (subcategory of subcategoryPage.content; track $index) {
-                                <option>{{ subcategory.name }}</option>
-                            }
-                        </datalist>
-                    </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-6">
+                    <input class="form-control w-100" type="text" placeholder="Editora" list="publishers" formControlName="publisher"/>
+                    <datalist id="publishers">
+                        @for (publisher of publisherPage.content; track $index) {
+                            <option>{{ publisher.name }}</option>
+                        }
+                    </datalist>
                 </div>
-                <div class="mb-3">
-                    <ul class="nav nav-tabs">
-                        <li class="nav-item">
-                          <a class="nav-link" [class.active]="!commenting" (click)="showDescriptionInput()">Descrição</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" [class.active]="commenting" (click)="showComentInput()">Comentário</a>
-                        </li>
-                    </ul>
-                    <div >
-                        <textarea class="w-100" rows="12"></textarea>
+                <div class="col-6">
+                    <input class="form-control w-100" placeholder="Páginas" type="text" formControlName="pages"/>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-6">
+                    <input class="form-control w-100" type="text" placeholder="Categoria" list="categories" formControlName="category"/>
+                    <datalist id="categories">
+                        @for (category of categoryPage.content; track $index) {
+                            <option>{{ category.name }}</option>
+                        }
+                    </datalist>
+                </div>
+                <div class="col-6">
+                    <input class="form-control w-100" type="text" placeholder="Subcategoria" list="subcategories" formControlName="subcategory"/>
+                    <datalist id="subcategories">
+                        @for (subcategory of subcategoryPage.content; track $index) {
+                            <option>{{ subcategory.name }}</option>
+                        }
+                    </datalist>
+                </div>
+            </div>
+            <div class="mb-3">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" [class.active]="!commenting" (click)="showDescriptionInput()">Descrição</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [class.active]="commenting" (click)="showComentInput()">Comentário</a>
+                    </li>
+                </ul>
+                <div >
+                    <div class="tab-content">
+                        <div class="tab-pane" [class.active]="!commenting">
+                            <textarea class="w-100" rows="12" formControlName="description"></textarea>
+                        </div>
+                        <div class="tab-pane" [class.active]="commenting">
+                            <textarea class="w-100" rows="12" formControlName="comment"></textarea>
+                        </div>
                     </div>
+                    
                 </div>
-                <div *ngIf="!isEditMode()" class="d-flex justify-content-end">
-                    <button class="btn btn-main">Salvar</button>
-                </div>
-            </form>
+            </div>
+            <div *ngIf="!isEditMode()" class="d-flex justify-content-end">
+                <button class="btn btn-main">Salvar</button>
+            </div>
         </div>
-    </div>
+    </form>
 </div>
