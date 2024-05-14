@@ -6,6 +6,8 @@ import { RatingComponent } from '../../components/rating/rating.component';
 import { LanguageService } from '../../services/language.service';
 import { Page } from '../../models/page.model';
 import { Language } from '../../models/language.model';
+import { Author } from '../../models/author.model';
+import { AuthorService } from '../../services/author.service';
 
 @Component({
   selector: 'app-book-form',
@@ -20,6 +22,10 @@ export class BookFormComponent implements OnInit {
   public bookRating: number = 0;
   public commenting: boolean = false;
 
+  public authorPage: Page<Author> = { 
+    orderBy: 'name', 
+    content: [] 
+  };
   public languagePage: Page<Language> = { 
     orderBy: 'name', 
     content: [] 
@@ -27,6 +33,7 @@ export class BookFormComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private authorService: AuthorService,
     private languageService: LanguageService
   ) {}
 
@@ -36,9 +43,12 @@ export class BookFormComponent implements OnInit {
         this.bookId = parseInt(params.get('id')!, 10);
       }
     });
+    this.authorService.getAll(this.authorPage).subscribe({
+      next: page => this.authorPage = page,
+    });
     this.languageService.getAll(this.languagePage).subscribe({
       next: page => this.languagePage = page,
-    })
+    });
   }
 
   public isEditMode(): boolean {
