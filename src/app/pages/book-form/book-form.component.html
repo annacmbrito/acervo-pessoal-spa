@@ -49,7 +49,12 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-6">
-                        <input class="form-control w-100" type="text"/>
+                        <input class="form-control w-100" type="text" list="publishers"/>
+                        <datalist id="publishers">
+                            @for (publisher of publisherPage.content; track $index) {
+                                <option>{{ publisher.name }}</option>
+                            }
+                        </datalist>
                     </div>
                     <div class="col-6">
                         <input class="form-control w-100" type="text"/>

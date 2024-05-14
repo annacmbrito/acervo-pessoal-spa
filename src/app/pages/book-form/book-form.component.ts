@@ -12,6 +12,8 @@ import { Category } from '../../models/category.model';
 import { CategoryService } from '../../services/category.service';
 import { Subcategory } from '../../models/subcategory.model';
 import { SubcategoryService } from '../../services/subcategory.service';
+import { Publisher } from '../../models/publisher.model';
+import { PublisherService } from '../../services/publisher.service';
 
 @Component({
   selector: 'app-book-form',
@@ -34,6 +36,10 @@ export class BookFormComponent implements OnInit {
     orderBy: 'name', 
     content: [] 
   };
+  public publisherPage: Page<Publisher> = { 
+    orderBy: 'name', 
+    content: [] 
+  };
   public categoryPage: Page<Category> = { 
     orderBy: 'name', 
     content: [] 
@@ -47,6 +53,7 @@ export class BookFormComponent implements OnInit {
     private route: ActivatedRoute,
     private authorService: AuthorService,
     private languageService: LanguageService,
+    private publisherService: PublisherService,
     private categoryService: CategoryService,
     private subcategoryService: SubcategoryService,
   ) {}
@@ -62,6 +69,9 @@ export class BookFormComponent implements OnInit {
     });
     this.languageService.getAll(this.languagePage).subscribe({
       next: page => this.languagePage = page,
+    });
+    this.publisherService.getAll(this.publisherPage).subscribe({
+      next: page => this.publisherPage = page,
     });
     this.categoryService.getAll(this.categoryPage).subscribe({
       next: page => this.categoryPage = page,
