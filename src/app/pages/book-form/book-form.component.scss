@@ -1,7 +1,7 @@
 .book-img {
-    width: 12rem;
-    height: 16rem;
-    border: 1px solid black;
+    width: 14rem;
+    height: 18rem;
+    border: 2px dashed #CCC;
     border-radius: 1rem;
     background-color: white;
 }
@@ -12,6 +12,7 @@
 
 .img-wrapper img {
     max-width: 100%;
+    filter: opacity(.8)
 }
 
 .nav-link {
