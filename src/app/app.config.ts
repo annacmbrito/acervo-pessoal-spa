@@ -5,7 +5,7 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideToastr } from 'ngx-toastr';
-import { jwtInterceptor } from './services/interceptor.interceptor';
+import { jwtInterceptor } from './interceptors/jwt.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
