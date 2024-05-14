@@ -3,6 +3,9 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { CommonModule } from '@angular/common';
 import { RatingComponent } from '../../components/rating/rating.component';
+import { LanguageService } from '../../services/language.service';
+import { Page } from '../../models/page.model';
+import { Language } from '../../models/language.model';
 
 @Component({
   selector: 'app-book-form',
@@ -17,13 +20,24 @@ export class BookFormComponent implements OnInit {
   public bookRating: number = 0;
   public commenting: boolean = false;
 
-  constructor(private route: ActivatedRoute) {}
+  public languagePage: Page<Language> = { 
+    orderBy: 'name', 
+    content: [] 
+  };
+
+  constructor(
+    private route: ActivatedRoute,
+    private languageService: LanguageService
+  ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       if(params.has("id")) {
         this.bookId = parseInt(params.get('id')!, 10);
       }
+    });
+    this.languageService.getAll(this.languagePage).subscribe({
+      next: page => this.languagePage = page,
     })
   }
 
