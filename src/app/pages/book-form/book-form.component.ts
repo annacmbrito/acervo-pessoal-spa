@@ -14,11 +14,13 @@ import { Subcategory } from '../../models/subcategory.model';
 import { SubcategoryService } from '../../services/subcategory.service';
 import { Publisher } from '../../models/publisher.model';
 import { PublisherService } from '../../services/publisher.service';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { BookStatus } from '../../models/book-status.enum';
 
 @Component({
   selector: 'app-book-form',
   standalone: true,
-  imports: [CommonModule, NavbarComponent, RatingComponent, RouterLink],
+  imports: [CommonModule, NavbarComponent, RatingComponent, RouterLink, ReactiveFormsModule],
   templateUrl: './book-form.component.html',
   styleUrl: './book-form.component.scss'
 })
@@ -27,6 +29,20 @@ export class BookFormComponent implements OnInit {
   public bookId?: number;
   public bookRating: number = 0;
   public commenting: boolean = false;
+
+  public form: FormGroup = this.formBuilder.group({
+    name: ['', [Validators.required, Validators.minLength(3), Validators.minLength(32)]],
+    description: ['', [Validators.required, Validators.minLength(3)]],
+    comment: ['', [Validators.required, Validators.minLength(3)]],
+    pages: ['', [Validators.required, Validators.min(0)]],
+    rating: [0, [Validators.required, Validators.min(0), Validators.max(5)]],
+    status: [BookStatus.AVAILABLE, [Validators.required]],
+    author: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32)]],
+    language: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32)]],
+    publisher: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32)]],
+    category: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32)]],
+    subcategory: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32)]],
+  });
 
   public authorPage: Page<Author> = { 
     orderBy: 'name', 
@@ -49,8 +65,13 @@ export class BookFormComponent implements OnInit {
     content: [] 
   };
 
+  public get bookStatus() {
+    return Object.values(BookStatus);
+  }
+
   constructor(
     private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
     private authorService: AuthorService,
     private languageService: LanguageService,
     private publisherService: PublisherService,
