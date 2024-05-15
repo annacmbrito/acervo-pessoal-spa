@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { CommonModule } from '@angular/common';
 import { RatingComponent } from '../../components/rating/rating.component';
@@ -16,6 +16,8 @@ import { Publisher } from '../../models/publisher.model';
 import { PublisherService } from '../../services/publisher.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BookStatus } from '../../models/book-status.enum';
+import { BookService } from '../../services/book.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-book-form',
@@ -31,17 +33,17 @@ export class BookFormComponent implements OnInit {
   public commenting: boolean = false;
 
   public form: FormGroup = this.formBuilder.group({
-    name: ['', [Validators.required, Validators.minLength(3), Validators.minLength(32)]],
-    description: ['', [Validators.required, Validators.minLength(3)]],
-    comment: ['', [Validators.required, Validators.minLength(3)]],
+    name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(128)]],
+    description: ['', []],
+    comment: ['', []],
     pages: ['', [Validators.required, Validators.min(0)]],
     rating: [0, [Validators.required, Validators.min(0), Validators.max(5)]],
-    status: [BookStatus.AVAILABLE, [Validators.required]],
-    author: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32)]],
-    language: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32)]],
-    publisher: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32)]],
-    category: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32)]],
-    subcategory: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(32)]],
+    status: ['AVAILABLE', [Validators.required]],
+    author: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(32)]],
+    language: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(32)]],
+    publisher: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(32)]],
+    category: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(32)]],
+    subcategory: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(32)]],
   });
 
   public authorPage: Page<Author> = { 
@@ -66,12 +68,15 @@ export class BookFormComponent implements OnInit {
   };
 
   public get bookStatus() {
-    return Object.values(BookStatus);
+    return Object.entries(BookStatus);
   }
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
+    private toastrService: ToastrService,
+    private bookService: BookService,
     private authorService: AuthorService,
     private languageService: LanguageService,
     private publisherService: PublisherService,
@@ -112,5 +117,30 @@ export class BookFormComponent implements OnInit {
 
   public showComentInput(): void {
     this.commenting = true;
+  }
+
+  public save(): void {
+    console.log(this.form);
+    if(this.form.valid) {
+      this.bookService.save({
+        name: this.form.value.name,
+        description: this.form.value.description,
+        comment: this.form.value.comment,
+        pages: this.form.value.pages,
+        rating: this.form.value.rating,
+        status: this.form.value.status,
+        author: this.form.value.author,
+        language: this.form.value.language,
+        publisher: this.form.value.publisher,
+        category: this.form.value.category,
+        subcategory: this.form.value.subcategory,
+      }).subscribe({
+        next: () => {
+          this.toastrService.success('Livro cadastrado com sucesso');
+          this.router.navigate(['/livros']);
+        },
+        error: () => this.toastrService.error('Falha ao cadastrar livro'),
+      });
+    }
   }
 }

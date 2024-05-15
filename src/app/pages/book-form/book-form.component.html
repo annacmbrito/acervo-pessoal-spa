@@ -15,7 +15,7 @@
             <div class="mb-3">
                 <select class="form-select" formControlName="status">
                     @for(status of bookStatus; track $index) {
-                        <option [value]="status" [selected]="$index == 0">{{ status }}</option>
+                        <option [value]="status[0]" [selected]="$index == 0">{{ status[1] }}</option>
                     }
                 </select>
             </div>
@@ -100,7 +100,7 @@
                 </div>
             </div>
             <div *ngIf="!isEditMode()" class="d-flex justify-content-end">
-                <button class="btn btn-main">Salvar</button>
+                <button class="btn btn-main" (click)="save()">Salvar</button>
             </div>
         </div>
     </form>
