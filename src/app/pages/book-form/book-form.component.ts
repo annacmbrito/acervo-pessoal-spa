@@ -119,8 +119,26 @@ export class BookFormComponent implements OnInit {
     this.commenting = true;
   }
 
+  public isFieldInvalid(name: string): boolean {
+    const control = this.form.get(name);
+    return !!control && control.invalid && (control.dirty || control.touched);
+  }
+
+  public getMessageValidationError(name: string): string {
+    const control = this.form.get(name);
+    if(control?.getError('required')) {
+      return 'Campo obrigatório'
+    } else if(control?.getError('minlength')) {
+      const error = control?.errors as any;
+      return `Tamanho mínimo de ${error.minlength.requiredLength} caracteres`;
+    } else if(control?.getError('maxlength')) {
+      const error = control?.errors as any;
+      return `Tamanho máximo de ${error.maxlength.requiredLength} caracteres`;
+    }
+    return '';
+  }
+
   public save(): void {
-    console.log(this.form);
     if(this.form.valid) {
       this.bookService.save({
         name: this.form.value.name,
@@ -141,6 +159,8 @@ export class BookFormComponent implements OnInit {
         },
         error: () => this.toastrService.error('Falha ao cadastrar livro'),
       });
+    } else {
+      this.form.markAllAsTouched();
     }
   }
 }

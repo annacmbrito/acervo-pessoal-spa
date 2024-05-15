@@ -28,54 +28,91 @@
             </div>
         </div>
         <div class="col-9">
-            <input class="form-control mb-3 w-100 text-center" type="text" placeholder="Nome do Livro" formControlName="name"/>
+            <div class="mb-3">
+                <input class="form-control w-100 text-center" [class.is-invalid]="isFieldInvalid('name')" type="text" placeholder="Nome do Livro" formControlName="name"/>
+                @if(isFieldInvalid('name')) {
+                    <div class="invalid-feedback">
+                        {{ getMessageValidationError('name') }}
+                    </div>
+                }
+            </div>
             <div class="row mb-3">
                 <div class="col-6">
-                    <input class="form-control w-100" type="text" placeholder="Autor(a)" list="authors" formControlName="author"/>
+                    <input class="form-control w-100" [class.is-invalid]="isFieldInvalid('author')" type="text" placeholder="Autor(a)" list="authors" formControlName="author"/>
                     <datalist id="authors">
                         @for (author of authorPage.content; track $index) {
                             <option>{{ author.name }}</option>
                         }
                     </datalist>
+                    @if(isFieldInvalid('author')) {
+                        <div class="invalid-feedback">
+                            {{ getMessageValidationError('author') }}
+                        </div>
+                    }
                 </div>
                 <div class="col-6">
-                    <input class="form-control w-100" type="text" placeholder="Idioma" list="languages" formControlName="language"/>
+                    <input class="form-control w-100" [class.is-invalid]="isFieldInvalid('language')" type="text" placeholder="Idioma" list="languages" formControlName="language"/>
                     <datalist id="languages">
                         @for (language of languagePage.content; track $index) {
                             <option>{{ language.name }}</option>
                         }
                     </datalist>
+                    @if(isFieldInvalid('language')) {
+                        <div class="invalid-feedback">
+                            {{ getMessageValidationError('language') }}
+                        </div>
+                    }
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-6">
-                    <input class="form-control w-100" type="text" placeholder="Editora" list="publishers" formControlName="publisher"/>
+                    <input class="form-control w-100" [class.is-invalid]="isFieldInvalid('publisher')" type="text" placeholder="Editora" list="publishers" formControlName="publisher"/>
                     <datalist id="publishers">
                         @for (publisher of publisherPage.content; track $index) {
                             <option>{{ publisher.name }}</option>
                         }
                     </datalist>
+                    @if(isFieldInvalid('publisher')) {
+                        <div class="invalid-feedback">
+                            {{ getMessageValidationError('publisher') }}
+                        </div>
+                    }
                 </div>
                 <div class="col-6">
-                    <input class="form-control w-100" placeholder="Páginas" type="text" formControlName="pages"/>
+                    <input class="form-control w-100" [class.is-invalid]="isFieldInvalid('pages')" placeholder="Páginas" type="text" formControlName="pages"/>
+                    @if(isFieldInvalid('pages')) {
+                        <div class="invalid-feedback">
+                            {{ getMessageValidationError('pages') }}
+                        </div>
+                    }
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-6">
-                    <input class="form-control w-100" type="text" placeholder="Categoria" list="categories" formControlName="category"/>
+                    <input class="form-control w-100" [class.is-invalid]="isFieldInvalid('category')" type="text" placeholder="Categoria" list="categories" formControlName="category"/>
                     <datalist id="categories">
                         @for (category of categoryPage.content; track $index) {
                             <option>{{ category.name }}</option>
                         }
                     </datalist>
+                    @if(isFieldInvalid('category')) {
+                        <div class="invalid-feedback">
+                            {{ getMessageValidationError('category') }}
+                        </div>
+                    }
                 </div>
                 <div class="col-6">
-                    <input class="form-control w-100" type="text" placeholder="Subcategoria" list="subcategories" formControlName="subcategory"/>
+                    <input class="form-control w-100" [class.is-invalid]="isFieldInvalid('subcategory')" type="text" placeholder="Subcategoria" list="subcategories" formControlName="subcategory"/>
                     <datalist id="subcategories">
                         @for (subcategory of subcategoryPage.content; track $index) {
                             <option>{{ subcategory.name }}</option>
                         }
                     </datalist>
+                    @if(isFieldInvalid('subcategory')) {
+                        <div class="invalid-feedback">
+                            {{ getMessageValidationError('subcategory') }}
+                        </div>
+                    }
                 </div>
             </div>
             <div class="mb-3">
