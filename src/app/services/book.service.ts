@@ -20,6 +20,10 @@ export class BookService {
     }).pipe(map(data => convertParamsToPage<Book>(data)));
   }
 
+  public getById(id: number): Observable<Book> {
+    return this.http.get<Book>(`${environment.apiBaseUrl}/api/v1/books/${id}`);
+  }
+
   public save(book: BookDTO): Observable<any> {
     return this.http.post<any>(`${environment.apiBaseUrl}/api/v1/books/`, book);
   }
