@@ -187,4 +187,29 @@ export class BookFormComponent implements OnInit {
       this.form.markAllAsTouched();
     }
   }
+
+  public update(): void {
+    if(this.form.valid) {
+      this.bookService.update(this.bookId!, {
+        name: this.form.value.name,
+        description: this.form.value.description,
+        comment: this.form.value.comment,
+        pages: this.form.value.pages,
+        rating: this.form.value.rating,
+        status: this.form.value.status,
+        author: this.form.value.author,
+        language: this.form.value.language,
+        publisher: this.form.value.publisher,
+        category: this.form.value.category,
+        subcategory: this.form.value.subcategory,
+      }).subscribe({
+        next: () => {
+          this.toastrService.success('Livro atualizado com sucesso');
+        },
+        error: () => this.toastrService.error('Falha ao atualizar livro'),
+      });
+    } else {
+      this.form.markAllAsTouched();
+    }
+  }
 }
