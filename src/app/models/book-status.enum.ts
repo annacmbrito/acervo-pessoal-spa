@@ -1,4 +1,4 @@
 export enum BookStatus {
-    AVAILABLE = 'Disponível',
+    AVAILABLE = 'No Acervo',
     BORROWED = 'Emprestado'
 }
