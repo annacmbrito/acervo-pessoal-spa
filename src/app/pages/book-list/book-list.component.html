@@ -1,2 +1,11 @@
-<app-navbar name="Gabriel Neves"></app-navbar>
-<button class="btn btn-main" routerLink="/livros/novo">Novo Livro</button>
+<app-navbar name="Anna Brito"></app-navbar>
+<div class="container">
+    <button class="btn btn-main mt-3" routerLink="/livros/novo">Novo Livro</button>
+    <div class="row mt-3">
+        @for (book of bookPage.content; track $index) {
+            <div class="col-3">
+                <app-book-details [book]="book"></app-book-details>
+            </div>
+        }
+    </div>
+</div>
