@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { CommonModule } from '@angular/common';
@@ -18,15 +18,26 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { BookStatus } from '../../models/book-status.enum';
 import { BookService } from '../../services/book.service';
 import { ToastrService } from 'ngx-toastr';
+import { ModalComponent } from '../../components/modal/modal.component';
 
 @Component({
   selector: 'app-book-form',
   standalone: true,
-  imports: [CommonModule, NavbarComponent, RatingComponent, RouterLink, ReactiveFormsModule],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule, 
+    NavbarComponent, 
+    RatingComponent, 
+    ModalComponent,
+    RouterLink, 
+  ],
   templateUrl: './book-form.component.html',
   styleUrl: './book-form.component.scss'
 })
 export class BookFormComponent implements OnInit {
+
+  @ViewChild(ModalComponent)
+  public modal!: ModalComponent;
 
   public bookId?: number;
   public bookRating: number = 0;
@@ -220,6 +231,6 @@ export class BookFormComponent implements OnInit {
         this.router.navigate(['/livros']);
       },
       error: () => this.toastrService.error('Falha ao excluir livro')
-    })
+    }).add(() => this.modal.hide());
   }
 }

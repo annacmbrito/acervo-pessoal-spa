@@ -24,7 +24,7 @@
                 <button *ngIf="isEditMode()" class="btn btn-main" (click)="update()">Editar</button>
             </div>
             <div *ngIf="isEditMode()" class="row">
-                <button class="btn btn-danger" (click)="delete()">Excluir</button>
+                <button class="btn btn-danger" (click)="modal.show()">Excluir</button>
             </div>
         </div>
         <div class="col-9">
@@ -142,3 +142,8 @@
         </div>
     </form>
 </div>
+<app-modal
+    title="Cuidado"
+    description="Essa operação não pode ser desfeita, deseja realmente excluir esse livro?"
+    (confirm)="delete()"
+></app-modal>
