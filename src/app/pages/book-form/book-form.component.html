@@ -24,7 +24,7 @@
                 <button *ngIf="isEditMode()" class="btn btn-main" (click)="update()">Editar</button>
             </div>
             <div *ngIf="isEditMode()" class="row">
-                <button class="btn btn-danger">Excluir</button>
+                <button class="btn btn-danger" (click)="delete()">Excluir</button>
             </div>
         </div>
         <div class="col-9">

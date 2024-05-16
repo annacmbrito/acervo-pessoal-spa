@@ -212,4 +212,14 @@ export class BookFormComponent implements OnInit {
       this.form.markAllAsTouched();
     }
   }
+
+  public delete(): void {
+    this.bookService.deleteById(this.bookId!).subscribe({
+      next: () => {
+        this.toastrService.success('Livro excluído com sucesso');
+        this.router.navigate(['/livros']);
+      },
+      error: () => this.toastrService.error('Falha ao excluir livro')
+    })
+  }
 }
