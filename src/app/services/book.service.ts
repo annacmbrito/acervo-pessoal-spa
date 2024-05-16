@@ -31,4 +31,8 @@ export class BookService {
   public update(id: number, book: BookDTO): Observable<any> {
     return this.http.put<any>(`${environment.apiBaseUrl}/api/v1/books/${id}`, book);
   }
+
+  public deleteById(id: number): Observable<any> {
+    return this.http.delete<any>(`${environment.apiBaseUrl}/api/v1/books/${id}`);
+  }
 }
