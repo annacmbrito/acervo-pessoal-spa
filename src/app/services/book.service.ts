@@ -27,4 +27,8 @@ export class BookService {
   public save(book: BookDTO): Observable<any> {
     return this.http.post<any>(`${environment.apiBaseUrl}/api/v1/books/`, book);
   }
+
+  public update(id: number, book: BookDTO): Observable<any> {
+    return this.http.put<any>(`${environment.apiBaseUrl}/api/v1/books/${id}`, book);
+  }
 }
