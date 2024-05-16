@@ -88,6 +88,7 @@ export class BookFormComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       if(params.has("id")) {
         this.bookId = parseInt(params.get('id')!, 10);
+        this.loadBook();
       }
     });
     this.authorService.getAll(this.authorPage).subscribe({
@@ -104,6 +105,29 @@ export class BookFormComponent implements OnInit {
     });
     this.subcategoryService.getAll(this.subcategoryPage).subscribe({
       next: page => this.subcategoryPage = page,
+    });
+  }
+  private loadBook(): void {
+    this.bookService.getById(this.bookId!).subscribe({
+      next: book => {
+        this.form.patchValue({
+          name: book.name,
+          description: book.description,
+          comment: book.comment,
+          pages: book.pages,
+          rating: book.rating,
+          status: book.status,
+          author: book.author.name,
+          language: book.language.name,
+          publisher: book.publisher.name,
+          category: book.category.name,
+          subcategory: book.subcategory.name,
+        });
+      },
+      error: () => {
+        this.toastrService.error('Livro não encontrado!');
+        this.router.navigate(['/livros']);
+      }
     });
   }
 
