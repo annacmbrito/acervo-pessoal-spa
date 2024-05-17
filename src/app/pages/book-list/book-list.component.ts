@@ -2,14 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { RouterLink } from '@angular/router';
 import { BookService } from '../../services/book.service';
-import { BookDetailsComponent } from '../../components/book-details/book-details.component';
 import { Page } from '../../models/page.model';
 import { Book } from '../../models/book.model';
+import { BookListItemComponent } from '../../components/book-list-item/book-list-item.component';
 
 @Component({
   selector: 'app-book-list',
   standalone: true,
-  imports: [NavbarComponent, RouterLink, BookDetailsComponent],
+  imports: [
+    RouterLink, 
+    NavbarComponent, 
+    BookListItemComponent,
+  ],
   templateUrl: './book-list.component.html',
   styleUrl: './book-list.component.scss'
 })
