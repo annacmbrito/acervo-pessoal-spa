@@ -1,0 +1,50 @@
+<form class="mt-5" [formGroup]="form">
+    <div class="d-flex flex-column align-items-center justify-content-center p-0 mb-3">
+        <div class="input-group w-50 mb-3">
+            <div class="input-group-text">
+                <img src="/assets/icons/search.png" width="16"/>
+            </div>
+            <input class="form-control" type="text" formControlName="token" placeholder="Título, Autor, Editora e Palavra-Chave">
+        </div>
+        <button class="btn btn-main" (click)="emitFilter()">Pesquisar</button>
+    </div>
+    <div class="d-flex align-items-center justify-content-center p-0 mb-3">
+        <select class="form-select me-4" formControlName="category_id" (change)="emitFilter()">
+            <option value="" selected>Categoria</option>
+            @for (category of categoryPage.content; track $index) {
+                <option [value]="category.id">{{ category.name }}</option>
+            }
+        </select>
+        <select class="form-select me-4" formControlName="subcategory_id" (change)="emitFilter()">
+            <option value="" selected>Subcategoria</option>
+            @for (subcategory of subcategoryPage.content; track $index) {
+                <option [value]="subcategory.id">{{ subcategory.name }}</option>
+            }
+        </select>
+        <select class="form-select me-4" formControlName="publisher_id" (change)="emitFilter()">
+            <option value="" selected>Editora</option>
+            @for (publisher of publisherPage.content; track $index) {
+                <option [value]="publisher.id">{{ publisher.name }}</option>
+            }
+        </select>
+        <select class="form-select" formControlName="rating" (change)="emitFilter()">
+            <option value="" selected>Avaliação</option>
+            <option [value]="1">⭐</option>
+            <option [value]="2">⭐⭐</option>
+            <option [value]="3">⭐⭐⭐</option>
+            <option [value]="4">⭐⭐⭐⭐</option>
+            <option [value]="5">⭐⭐⭐⭐⭐</option>
+        </select>
+    </div>
+    <div class="d-flex align-items-center justify-content-end p-0 mb-3">
+        <div>
+            <select class="form-select" formControlName="orderBy" (change)="emitFilter()">
+                <option value="" selected>Ordenar por</option>
+                <option value="name">Nome</option>
+                <option value="author">Autor(a)</option>
+                <option value="rating">Avaliação</option>
+                <option value="rating">Status</option>
+            </select>
+        </div>
+    </div>
+</form>
