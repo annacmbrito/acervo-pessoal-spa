@@ -5,6 +5,8 @@ import { BookService } from '../../services/book.service';
 import { Page } from '../../models/page.model';
 import { Book } from '../../models/book.model';
 import { BookListItemComponent } from '../../components/book-list-item/book-list-item.component';
+import { BookListFilterComponent } from '../../components/book-list-filter/book-list-filter.component';
+import { BookFilterDTO } from '../../models/book-filter.dto';
 
 @Component({
   selector: 'app-book-list',
@@ -13,6 +15,7 @@ import { BookListItemComponent } from '../../components/book-list-item/book-list
     RouterLink, 
     NavbarComponent, 
     BookListItemComponent,
+    BookListFilterComponent,
   ],
   templateUrl: './book-list.component.html',
   styleUrl: './book-list.component.scss'
@@ -31,4 +34,6 @@ export class BookListComponent implements OnInit {
       next: page => this.bookPage = page
     })
   }
+
+  public filter(filter: BookFilterDTO): void {}
 }
