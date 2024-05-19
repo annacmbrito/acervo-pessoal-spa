@@ -4,7 +4,8 @@ import { Observable, map } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Book, BookDTO } from '../models/book.model';
 import { Page } from '../models/page.model';
-import { convertPageToParam, convertParamsToPage } from '../util/mappers';
+import { convertFilterToParam, convertPageToParam, convertParamsToPage } from '../util/mappers';
+import { BookFilterDTO } from '../models/book-filter.dto';
 
 
 @Injectable({
@@ -14,9 +15,12 @@ export class BookService {
 
   constructor(private http: HttpClient) { }
 
-  public getAll(page: Page<Book>): Observable<Page<Book>> {
+  public getAll(page: Page<Book>, filter?: BookFilterDTO): Observable<Page<Book>> {
     return this.http.get<any>(`${environment.apiBaseUrl}/api/v1/books/`, {
-      params: convertPageToParam(page),
+      params: {
+        ...convertPageToParam(page),
+        ...convertFilterToParam(filter)
+      },
     }).pipe(map(data => convertParamsToPage<Book>(data)));
   }
 
