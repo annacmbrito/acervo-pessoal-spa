@@ -27,3 +27,15 @@ export function convertPageToParam(page: Page<any>): any {
     }
     return param;
 }
+
+export function convertFilterToParam(page: any): any {
+    let param = {} as any;
+    if(page) {
+        Object.entries(page).forEach((entry) => {
+            if(!!entry[1]) {
+               param[entry[0]] = entry[1];
+            }
+        })
+    }
+    return param;
+}
