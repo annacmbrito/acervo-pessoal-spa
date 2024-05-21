@@ -44,17 +44,17 @@ export class BookFormComponent implements OnInit {
   public commenting: boolean = false;
 
   public form: FormGroup = this.formBuilder.group({
-    name: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(128)]],
+    name: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(128)]],
     description: [null, []],
     comment: [null, []],
     pages: [null, [Validators.min(0)]],
     rating: [0, [Validators.min(0), Validators.max(5)]],
     status: ['AVAILABLE', [Validators.required]],
-    author: [null, [Validators.minLength(3), Validators.maxLength(32)]],
-    language: [null, [Validators.minLength(3), Validators.maxLength(32)]],
-    publisher: [null, [Validators.minLength(3), Validators.maxLength(32)]],
-    category: [null, [Validators.minLength(3), Validators.maxLength(32)]],
-    subcategory: [null, [Validators.minLength(3), Validators.maxLength(32)]],
+    author: [null, [Validators.maxLength(32)]],
+    language: [null, [Validators.maxLength(32)]],
+    publisher: [null, [Validators.maxLength(32)]],
+    category: [null, [Validators.maxLength(32)]],
+    subcategory: [null, [Validators.maxLength(32)]],
   });
 
   public authorPage: Page<Author> = { 
