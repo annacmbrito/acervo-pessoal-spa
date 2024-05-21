@@ -128,11 +128,11 @@ export class BookFormComponent implements OnInit {
           pages: book.pages,
           rating: book.rating,
           status: book.status,
-          author: book.author.name,
-          language: book.language.name,
-          publisher: book.publisher.name,
-          category: book.category.name,
-          subcategory: book.subcategory.name,
+          author: book.author?.name,
+          language: book.language?.name,
+          publisher: book.publisher?.name,
+          category: book.category?.name,
+          subcategory: book.subcategory?.name,
         });
       },
       error: () => {
