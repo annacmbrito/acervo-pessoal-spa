@@ -29,7 +29,7 @@ export class BookListFilterComponent implements OnInit {
     publisher_id: [''],
     category_id: [''],
     subcategory_id: [''],
-    orderBy: [''],
+    order_direction: [''],
   });
 
   public publisherPage: Page<Publisher> = { 

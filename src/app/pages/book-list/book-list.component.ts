@@ -36,7 +36,7 @@ export class BookListComponent implements OnInit {
   }
 
   public filter(filter: BookFilterDTO): void {
-    this.bookPage.orderBy = filter.orderBy;
+    this.bookPage.orderDirection = filter.order_direction;
     this.bookService.getAll(this.bookPage, filter).subscribe({
       next: page => this.bookPage = page
     })
