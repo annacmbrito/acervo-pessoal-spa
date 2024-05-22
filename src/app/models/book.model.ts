@@ -5,6 +5,7 @@ export interface Book {
     description?: string
     rating: number
     status: string
+    image: string,
     pages?: number,
     author?: { id: number, name: string }
     language?: { id: number, name: string }
@@ -20,6 +21,7 @@ export interface BookDTO {
     pages: number
     rating: number
     status: string
+    image: string,
     author: string,
     language: string,
     publisher: string,
