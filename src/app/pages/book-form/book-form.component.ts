@@ -198,6 +198,7 @@ export class BookFormComponent implements OnInit {
       this.form.disable();
       this.imageService.upload(this.file).subscribe({
         next: url => {
+          this.file = null;
           this.bookImage = url;
           this.saveBook();
         },
@@ -241,6 +242,7 @@ export class BookFormComponent implements OnInit {
       this.form.disable();
       this.imageService.upload(this.file).subscribe({
         next: url => {
+          this.file = null;
           this.bookImage = url;
           this.updateBook();
         },
