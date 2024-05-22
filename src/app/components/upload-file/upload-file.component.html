@@ -1,0 +1,6 @@
+<input [id]="id" type="file" accept="image/*" (change)="onFileInputChange($event.target)">
+<button class="book-img d-flex flex-column align-items-center justify-content-center" (click)="triggerFileInput()">
+    <div [class.img-wrapper]="!url" [class.img-selected]="url">
+        <img [src]="getUrlImage()" />
+    </div>
+</button>

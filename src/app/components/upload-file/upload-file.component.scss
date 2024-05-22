@@ -1,0 +1,30 @@
+input {
+    display: none;
+}
+
+.book-img {
+    width: 14rem;
+    height: 20rem;
+    border: 2px dashed #CCC;
+    border-radius: 1rem;
+    background-color: white;
+}
+
+.img-wrapper {
+    width: 5rem;
+}
+
+.img-wrapper img {
+    max-width: 100%;
+    filter: opacity(.8);
+}
+
+.img-selected {
+    width: calc(12.5rem);
+}
+
+.img-selected img {
+    max-width: 100%;
+    filter: opacity(.8);
+    border-radius: 1rem;
+}
