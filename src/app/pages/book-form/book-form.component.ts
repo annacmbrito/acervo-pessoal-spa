@@ -22,6 +22,7 @@ import { ModalComponent } from '../../components/modal/modal.component';
 import { UploadFileComponent } from '../../components/upload-file/upload-file.component';
 import { ImageService } from '../../services/image.service';
 import { environment } from '../../../environments/environment';
+import { SpinnerComponent } from '../../components/spinner/spinner.component';
 
 @Component({
   selector: 'app-book-form',
@@ -32,6 +33,7 @@ import { environment } from '../../../environments/environment';
     NavbarComponent, 
     RatingComponent, 
     ModalComponent,
+    SpinnerComponent,
     UploadFileComponent,
     RouterLink, 
   ],
@@ -193,6 +195,7 @@ export class BookFormComponent implements OnInit {
 
   public save(): void {
     if(this.form.valid && this.file) {
+      this.form.disable();
       this.imageService.upload(this.file).subscribe({
         next: url => {
           this.bookImage = url;
@@ -201,7 +204,7 @@ export class BookFormComponent implements OnInit {
         error: () => {
           this.toastrService.error('Falha ao cadastrar imagem');
         },
-      });
+      }).add(() => this.form.enable());
     } else if (this.form.valid) {
       this.saveBook();
     } else {
@@ -210,6 +213,7 @@ export class BookFormComponent implements OnInit {
   }
 
   private saveBook(): void {
+    this.form.disable();
     this.bookService.save({
       name: this.form.value.name,
       description: this.form.value.description,
@@ -229,11 +233,12 @@ export class BookFormComponent implements OnInit {
         this.router.navigate(['/livros']);
       },
       error: () => this.toastrService.error('Falha ao cadastrar livro'),
-    });
+    }).add(() => this.form.enable());
   }
 
   public update(): void {
     if(this.form.valid && this.file) {
+      this.form.disable();
       this.imageService.upload(this.file).subscribe({
         next: url => {
           this.bookImage = url;
@@ -242,7 +247,7 @@ export class BookFormComponent implements OnInit {
         error: () => {
           this.toastrService.error('Falha ao cadastrar imagem');
         },
-      });
+      }).add(() => this.form.enable());
     } else if (this.form.valid) {
       this.updateBook();
     } else {
@@ -251,6 +256,7 @@ export class BookFormComponent implements OnInit {
   }
 
   private updateBook(): void {
+    this.form.disable();
     this.bookService.update(this.bookId!, {
       name: this.form.value.name,
       description: this.form.value.description,
@@ -269,7 +275,7 @@ export class BookFormComponent implements OnInit {
         this.toastrService.success('Livro atualizado com sucesso');
       },
       error: () => this.toastrService.error('Falha ao atualizar livro'),
-    });
+    }).add(() => this.form.enable());
   }
 
   public delete(): void {
