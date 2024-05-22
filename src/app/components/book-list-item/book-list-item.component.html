@@ -1,8 +1,10 @@
-<div class="card" style="width: 18rem;" routerLink="/livros/{{book.id}}">
+<div class="card" routerLink="/livros/{{book.id}}">
     <div class="card-header text-truncate">
         {{ book.name }}
     </div>
-    <img src="https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg" class="card-img-top">
+    <div class="img-wrapper">
+        <img [src]="book.image" class="">
+    </div>
     <ul class="list-group list-group-flush">
         <li class="list-group-item">Autor(a): {{ book.author?.name }}</li>
         <li class="list-group-item d-flex align-items-center justify-content-start">

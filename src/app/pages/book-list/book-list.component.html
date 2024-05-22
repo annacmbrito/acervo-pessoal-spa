@@ -6,7 +6,7 @@
     </div>
     <div class="row">
         @for (book of bookPage.content; track $index) {
-            <div class="col-3">
+            <div class="col-3 mb-4">
                 <app-book-list-item [book]="book"></app-book-list-item>
             </div>
         }
