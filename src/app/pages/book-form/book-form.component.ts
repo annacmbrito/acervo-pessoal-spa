@@ -19,6 +19,9 @@ import { BookStatus } from '../../models/book-status.enum';
 import { BookService } from '../../services/book.service';
 import { ToastrService } from 'ngx-toastr';
 import { ModalComponent } from '../../components/modal/modal.component';
+import { UploadFileComponent } from '../../components/upload-file/upload-file.component';
+import { ImageService } from '../../services/image.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-book-form',
@@ -29,6 +32,7 @@ import { ModalComponent } from '../../components/modal/modal.component';
     NavbarComponent, 
     RatingComponent, 
     ModalComponent,
+    UploadFileComponent,
     RouterLink, 
   ],
   templateUrl: './book-form.component.html',
@@ -40,8 +44,11 @@ export class BookFormComponent implements OnInit {
   public modal!: ModalComponent;
 
   public bookId?: number;
+  public bookImage: string = environment.bookImageDefault;
   public bookRating: number = 0;
   public commenting: boolean = false;
+
+  private file: File | null = null;
 
   public form: FormGroup = this.formBuilder.group({
     name: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(128)]],
@@ -55,6 +62,7 @@ export class BookFormComponent implements OnInit {
     publisher: [null, [Validators.maxLength(32)]],
     category: [null, [Validators.maxLength(32)]],
     subcategory: [null, [Validators.maxLength(32)]],
+    file: [null],
   });
 
   public authorPage: Page<Author> = { 
@@ -86,6 +94,7 @@ export class BookFormComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
+    private imageService: ImageService,
     private toastrService: ToastrService,
     private bookService: BookService,
     private authorService: AuthorService,
@@ -121,6 +130,7 @@ export class BookFormComponent implements OnInit {
   private loadBook(): void {
     this.bookService.getById(this.bookId!).subscribe({
       next: book => {
+        this.bookImage = book.image;
         this.form.patchValue({
           name: book.name,
           description: book.description,
@@ -173,55 +183,93 @@ export class BookFormComponent implements OnInit {
     return '';
   }
 
+  public getBookImage(): string | null {
+    return this.bookImage !== environment.bookImageDefault ? this.bookImage : null;
+  }
+
+  public onSelectFile(file: File): void {
+    this.file = file;
+  }
+
   public save(): void {
-    if(this.form.valid) {
-      this.bookService.save({
-        name: this.form.value.name,
-        description: this.form.value.description,
-        comment: this.form.value.comment,
-        pages: this.form.value.pages,
-        rating: this.form.value.rating,
-        status: this.form.value.status,
-        author: this.form.value.author,
-        language: this.form.value.language,
-        publisher: this.form.value.publisher,
-        category: this.form.value.category,
-        subcategory: this.form.value.subcategory,
-      }).subscribe({
-        next: () => {
-          this.toastrService.success('Livro cadastrado com sucesso');
-          this.router.navigate(['/livros']);
+    if(this.form.valid && this.file) {
+      this.imageService.upload(this.file).subscribe({
+        next: url => {
+          this.bookImage = url;
+          this.saveBook();
         },
-        error: () => this.toastrService.error('Falha ao cadastrar livro'),
+        error: () => {
+          this.toastrService.error('Falha ao cadastrar imagem');
+        },
       });
+    } else if (this.form.valid) {
+      this.saveBook();
     } else {
       this.form.markAllAsTouched();
     }
   }
 
+  private saveBook(): void {
+    this.bookService.save({
+      name: this.form.value.name,
+      description: this.form.value.description,
+      comment: this.form.value.comment,
+      pages: this.form.value.pages,
+      rating: this.form.value.rating,
+      status: this.form.value.status,
+      author: this.form.value.author,
+      language: this.form.value.language,
+      publisher: this.form.value.publisher,
+      category: this.form.value.category,
+      subcategory: this.form.value.subcategory,
+      image: this.bookImage,
+    }).subscribe({
+      next: () => {
+        this.toastrService.success('Livro cadastrado com sucesso');
+        this.router.navigate(['/livros']);
+      },
+      error: () => this.toastrService.error('Falha ao cadastrar livro'),
+    });
+  }
+
   public update(): void {
-    if(this.form.valid) {
-      this.bookService.update(this.bookId!, {
-        name: this.form.value.name,
-        description: this.form.value.description,
-        comment: this.form.value.comment,
-        pages: this.form.value.pages,
-        rating: this.form.value.rating,
-        status: this.form.value.status,
-        author: this.form.value.author,
-        language: this.form.value.language,
-        publisher: this.form.value.publisher,
-        category: this.form.value.category,
-        subcategory: this.form.value.subcategory,
-      }).subscribe({
-        next: () => {
-          this.toastrService.success('Livro atualizado com sucesso');
+    if(this.form.valid && this.file) {
+      this.imageService.upload(this.file).subscribe({
+        next: url => {
+          this.bookImage = url;
+          this.updateBook();
         },
-        error: () => this.toastrService.error('Falha ao atualizar livro'),
+        error: () => {
+          this.toastrService.error('Falha ao cadastrar imagem');
+        },
       });
+    } else if (this.form.valid) {
+      this.updateBook();
     } else {
       this.form.markAllAsTouched();
     }
+  }
+
+  private updateBook(): void {
+    this.bookService.update(this.bookId!, {
+      name: this.form.value.name,
+      description: this.form.value.description,
+      comment: this.form.value.comment,
+      pages: this.form.value.pages,
+      rating: this.form.value.rating,
+      status: this.form.value.status,
+      author: this.form.value.author,
+      language: this.form.value.language,
+      publisher: this.form.value.publisher,
+      category: this.form.value.category,
+      subcategory: this.form.value.subcategory,
+      image: this.bookImage,
+    }).subscribe({
+      next: () => {
+        this.toastrService.success('Livro atualizado com sucesso');
+      },
+      error: () => this.toastrService.error('Falha ao atualizar livro'),
+    });
   }
 
   public delete(): void {
