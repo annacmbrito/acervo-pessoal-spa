@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 <div class="container">
     <form class="row p-5" [formGroup]="form">
-        <div class="col-3 d-flex flex-column align-items-center justify-content-start">
+        <div class="col-lg-3 d-flex flex-column align-items-center justify-content-start">
             <div class="mb-3">
                 <app-upload-file [url]="getBookImage()" (selectFile)="onSelectFile($event)"></app-upload-file>
             </div>
@@ -29,7 +29,7 @@
                 <button class="btn btn-danger" (click)="modal.show()">Excluir</button>
             </div>
         </div>
-        <div class="col-9">
+        <div class="col-lg-9">
             <div class="mb-3">
                 <input class="form-control w-100 text-center" [class.is-invalid]="isFieldInvalid('name')" type="text" placeholder="Nome do Livro" formControlName="name"/>
                 @if(isFieldInvalid('name')) {
@@ -38,8 +38,8 @@
                     </div>
                 }
             </div>
-            <div class="row mb-3">
-                <div class="col-6">
+            <div class="row">
+                <div class="col-sm-6 mb-3">
                     <input class="form-control w-100" [class.is-invalid]="isFieldInvalid('author')" type="text" placeholder="Autor(a)" list="authors" formControlName="author"/>
                     <datalist id="authors">
                         @for (author of authorPage.content; track $index) {
@@ -52,7 +52,7 @@
                         </div>
                     }
                 </div>
-                <div class="col-6">
+                <div class="col-sm-6 mb-3">
                     <input class="form-control w-100" [class.is-invalid]="isFieldInvalid('language')" type="text" placeholder="Idioma" list="languages" formControlName="language"/>
                     <datalist id="languages">
                         @for (language of languagePage.content; track $index) {
@@ -66,8 +66,8 @@
                     }
                 </div>
             </div>
-            <div class="row mb-3">
-                <div class="col-6">
+            <div class="row">
+                <div class="col-sm-6 mb-3">
                     <input class="form-control w-100" [class.is-invalid]="isFieldInvalid('publisher')" type="text" placeholder="Editora" list="publishers" formControlName="publisher"/>
                     <datalist id="publishers">
                         @for (publisher of publisherPage.content; track $index) {
@@ -80,7 +80,7 @@
                         </div>
                     }
                 </div>
-                <div class="col-6">
+                <div class="col-sm-6 mb-3">
                     <input class="form-control w-100" [class.is-invalid]="isFieldInvalid('pages')" placeholder="Páginas" type="text" formControlName="pages"/>
                     @if(isFieldInvalid('pages')) {
                         <div class="invalid-feedback">
@@ -89,8 +89,8 @@
                     }
                 </div>
             </div>
-            <div class="row mb-3">
-                <div class="col-6">
+            <div class="row">
+                <div class="col-sm-6 mb-3">
                     <input class="form-control w-100" [class.is-invalid]="isFieldInvalid('category')" type="text" placeholder="Categoria" list="categories" formControlName="category"/>
                     <datalist id="categories">
                         @for (category of categoryPage.content; track $index) {
@@ -103,7 +103,7 @@
                         </div>
                     }
                 </div>
-                <div class="col-6">
+                <div class="col-sm-6 mb-3">
                     <input class="form-control w-100" [class.is-invalid]="isFieldInvalid('subcategory')" type="text" placeholder="Subcategoria" list="subcategories" formControlName="subcategory"/>
                     <datalist id="subcategories">
                         @for (subcategory of subcategoryPage.content; track $index) {
