@@ -1,47 +1,21 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import ImageKit from 'imagekit';
-import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { v4 } from 'uuid';
+import { Image } from '../models/image.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ImageService {
 
-  private kit!: ImageKit;
+  constructor(private http: HttpClient) {}
 
-  constructor() {
-    this.kit = new ImageKit({
-      publicKey: environment.imageKit.publicKey,
-      privateKey: environment.imageKit.privateKey,
-      urlEndpoint: environment.imageKit.endpoint,
-    });
+  public upload(file: File): Observable<Image> {
+    const formData = new FormData();
+    formData.append('file', file, v4());
+    return this.http.post<Image>(`${environment.apiBaseUrl}/api/v1/images/upload`, formData)
   }
 
-  public upload(file: File): Observable<string> {
-    return new Observable(subscriber => {
-      this.readFile(file, (content) => {
-        this.kit.upload({
-          file: content,
-          fileName: v4(),
-        }, (err, result) => {
-          if(err) {
-            subscriber.error(err);
-          } else {
-            subscriber.next(result?.url);
-          }
-          subscriber.complete();
-        });
-      });
-    });
-  }
-
-  private readFile(file: File, callback: (content: string) => void) {
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      callback((event.target!.result as string).split(',')[1]);
-    };
-    reader.readAsDataURL(file);
-  }
 }
