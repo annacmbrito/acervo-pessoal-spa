@@ -15,8 +15,8 @@ export class BookListItemComponent {
   @Input()
   public book!: Book;
 
-  public getBookURL(): string | null {
-    return this.book.image ? this.book.image.url : null;
+  public getBookURL(): string {
+    return this.book.image ? this.book.image.url : '/assets/images/book-image-default.jpeg';
   }
 
   public getBookStatus() {
