@@ -21,7 +21,7 @@ export interface BookDTO {
     pages: number
     rating: number
     status: string
-    image: string,
+    image_id: string | null,
     author: string,
     language: string,
     publisher: string,
