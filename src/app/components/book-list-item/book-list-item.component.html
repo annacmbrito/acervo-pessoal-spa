@@ -3,7 +3,7 @@
         {{ book.name }}
     </div>
     <div class="img-wrapper">
-        <img [src]="book.image" class="">
+        <img [src]="getBookURL()" class="">
     </div>
     <ul class="list-group list-group-flush">
         <li class="list-group-item">Autor(a): {{ book.author?.name }}</li>

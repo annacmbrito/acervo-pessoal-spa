@@ -15,6 +15,10 @@ export class BookListItemComponent {
   @Input()
   public book!: Book;
 
+  public getBookURL(): string | null {
+    return this.book.image ? this.book.image.url : null;
+  }
+
   public getBookStatus() {
     const statusKey = this.book.status as keyof typeof BookStatus;
     return BookStatus[statusKey];
