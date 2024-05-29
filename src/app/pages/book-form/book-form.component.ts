@@ -21,8 +21,8 @@ import { ToastrService } from 'ngx-toastr';
 import { ModalComponent } from '../../components/modal/modal.component';
 import { UploadFileComponent } from '../../components/upload-file/upload-file.component';
 import { ImageService } from '../../services/image.service';
-import { environment } from '../../../environments/environment';
 import { SpinnerComponent } from '../../components/spinner/spinner.component';
+import { Image } from '../../models/image.model';
 
 @Component({
   selector: 'app-book-form',
@@ -46,7 +46,7 @@ export class BookFormComponent implements OnInit {
   public modal!: ModalComponent;
 
   public bookId?: number;
-  public bookImage: string = environment.bookImageDefault;
+  public bookImage: Image | null = null;
   public bookRating: number = 0;
   public commenting: boolean = false;
 
@@ -129,6 +129,7 @@ export class BookFormComponent implements OnInit {
       next: page => this.subcategoryPage = page,
     });
   }
+
   private loadBook(): void {
     this.bookService.getById(this.bookId!).subscribe({
       next: book => {
@@ -186,7 +187,7 @@ export class BookFormComponent implements OnInit {
   }
 
   public getBookImage(): string | null {
-    return this.bookImage !== environment.bookImageDefault ? this.bookImage : null;
+    return this.bookImage ? this.bookImage.url : null;
   }
 
   public onSelectFile(file: File): void {
@@ -197,9 +198,9 @@ export class BookFormComponent implements OnInit {
     if(this.form.valid && this.file) {
       this.form.disable();
       this.imageService.upload(this.file).subscribe({
-        next: url => {
+        next: image => {
           this.file = null;
-          this.bookImage = url;
+          this.bookImage = image;
           this.saveBook();
         },
         error: () => {
@@ -227,7 +228,7 @@ export class BookFormComponent implements OnInit {
       publisher: this.form.value.publisher,
       category: this.form.value.category,
       subcategory: this.form.value.subcategory,
-      image: this.bookImage,
+      image_id: this.bookImage ? this.bookImage.id : null,
     }).subscribe({
       next: () => {
         this.toastrService.success('Livro cadastrado com sucesso');
@@ -241,9 +242,9 @@ export class BookFormComponent implements OnInit {
     if(this.form.valid && this.file) {
       this.form.disable();
       this.imageService.upload(this.file).subscribe({
-        next: url => {
+        next: image => {
           this.file = null;
-          this.bookImage = url;
+          this.bookImage = image;
           this.updateBook();
         },
         error: () => {
@@ -271,7 +272,7 @@ export class BookFormComponent implements OnInit {
       publisher: this.form.value.publisher,
       category: this.form.value.category,
       subcategory: this.form.value.subcategory,
-      image: this.bookImage,
+      image_id: this.bookImage ? this.bookImage.id : null,
     }).subscribe({
       next: () => {
         this.toastrService.success('Livro atualizado com sucesso');
