@@ -5,7 +5,7 @@ export interface Book {
     description?: string
     rating: number
     status: string
-    image: string,
+    image: { id: string, url: string },
     pages?: number,
     author?: { id: number, name: string }
     language?: { id: number, name: string }
