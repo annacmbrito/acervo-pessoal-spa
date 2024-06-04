@@ -16,7 +16,7 @@ export class AuthService {
     email: string, 
     password: string
   }): Observable<void> {
-    return this.http.post<{token:string}>(`${environment.apiBaseUrl}/api/v1/auth`, data)
+    return this.http.post<{token:string}>(`${environment.apiBaseUrl}/api/v1/auth/`, data)
       .pipe(map(({ token }) => localStorage.setItem(this.TOKEN_KEY, token)));
   }
 
