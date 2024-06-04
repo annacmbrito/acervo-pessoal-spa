@@ -1,7 +1,7 @@
 {
-    "/api": {
+    "/acervo-pessoal-api": {
         "target": "http://localhost:8000",
-        "pathRewrite": { "^/api": "" },
+        "pathRewrite": { "^/acervo-pessoal-api": "" },
         "secure": false,
         "changeOrigin": true
     }
