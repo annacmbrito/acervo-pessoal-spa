@@ -50,6 +50,8 @@ export class BookFormComponent implements OnInit {
   public bookRating: number = 0;
   public commenting: boolean = false;
 
+  public editing: boolean = false;
+
   private file: File | null = null;
 
   public form: FormGroup = this.formBuilder.group({
@@ -111,6 +113,7 @@ export class BookFormComponent implements OnInit {
       if(params.has("id")) {
         this.bookId = parseInt(params.get('id')!, 10);
         this.loadBook();
+        this.form.disable();
       }
     });
     this.authorService.getAll(this.authorPage).subscribe({
@@ -276,9 +279,12 @@ export class BookFormComponent implements OnInit {
     }).subscribe({
       next: () => {
         this.toastrService.success('Livro atualizado com sucesso');
+        this.editing = false;
       },
       error: () => this.toastrService.error('Falha ao atualizar livro'),
-    }).add(() => this.form.enable());
+    })
+    // .add(() => this.form.enable())
+    ;
   }
 
   public delete(): void {
@@ -289,5 +295,10 @@ export class BookFormComponent implements OnInit {
       },
       error: () => this.toastrService.error('Falha ao excluir livro')
     }).add(() => this.modal.hide());
+  }
+
+  public enterEditingMode(){
+    this.form.enable();
+    this.editing = true;
   }
 }

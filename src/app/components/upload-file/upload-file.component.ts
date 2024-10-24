@@ -13,14 +13,19 @@ export class UploadFileComponent {
   public id: string = v4();
 
   @Input()
+  public disabled: boolean = false;
+
+  @Input()
   public url: string | null = null;
 
   @Output()
   public selectFile: EventEmitter<File> = new EventEmitter();
 
   public triggerFileInput(): void {
-    const input = document.getElementById(this.id) as HTMLInputElement;
-    input.click();
+    if(!this.disabled){
+      const input = document.getElementById(this.id) as HTMLInputElement;
+      input.click();
+    }
   }
 
   public getUrlImage(): string {

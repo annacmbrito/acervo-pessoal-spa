@@ -3,10 +3,10 @@
     <form class="row p-5" [formGroup]="form">
         <div class="col-lg-3 d-flex flex-column align-items-center justify-content-start">
             <div class="mb-3">
-                <app-upload-file [url]="getBookImage()" (selectFile)="onSelectFile($event)"></app-upload-file>
+                <app-upload-file [url]="getBookImage()" [disabled]="!editing" (selectFile)="onSelectFile($event)"></app-upload-file>
             </div>
             <div class="mb-3">
-                <app-rating [value]="form.get('rating')?.value" (valueChange)="form.get('rating')?.setValue($event)" />
+                <app-rating [value]="form.get('rating')?.value" [disabled]="!editing" (valueChange)="form.get('rating')?.setValue($event)" />
             </div>
             <div class="mb-3">
                 <select class="form-select" formControlName="status">
@@ -17,13 +17,18 @@
             </div>
             <div class="d-flex mb-3">
                 <button class="btn btn-secondary me-3" routerLink="/livros">Voltar</button>
-                <button *ngIf="isEditMode()" class="btn btn-main" [disabled]="form.disabled" (click)="update()">
-                    @if (form.disabled) {
-                        <app-spinner></app-spinner>
-                    } @else {
-                        <span>Editar</span>
-                    }
+                <button *ngIf="isEditMode() && !editing" class="btn btn-main" (click)="enterEditingMode()">
+                    <span>Editar</span>
                 </button>
+                <div *ngIf="isEditMode() && editing" class="d-flex justify-content-end">
+                    <button class="btn btn-main" (click)="update()">
+                        @if (form.disabled) {
+                            <app-spinner></app-spinner>
+                        } @else {
+                            <span>Salvar</span>
+                        }
+                    </button>
+                </div>
             </div>
             <div *ngIf="isEditMode()" class="row mb-3">
                 <button class="btn btn-danger" (click)="modal.show()">Excluir</button>

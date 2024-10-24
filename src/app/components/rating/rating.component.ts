@@ -12,11 +12,16 @@ export class RatingComponent {
   @Input()
   public value: number = 0;
 
+  @Input()
+  public disabled: boolean = false;
+
   @Output()
   public valueChange: EventEmitter<number> = new EventEmitter();
 
   public setValue(value: number): void {
-    this.value = value;
-    this.valueChange.emit(this.value);
+    if (!this.disabled) {
+      this.value = value;
+      this.valueChange.emit(this.value);
+    }
   }
 }
